@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CATBOT - AI Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Sidebar -->
+        <aside id="sidebar" aria-label="Sidebar Navigation">
+            <div class="sidebar-top">
+                <button class="new-chat-btn" onclick="clearChat()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    New Chat
+                </button>
+                <div class="search-box">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                    </svg>
+                    <input type="text" placeholder="Search conversations..." aria-label="Search conversations">
+                </div>
+            </div>
+
+            <div class="sidebar-middle">
+                <div class="section-title">Recent Chats</div>
+                <ul class="chat-list" id="recent-chats">
+                    <!-- Populated by JS, showing examples for demo -->
+                    <li tabindex="0">C++ Programming</li>
+                    <li tabindex="0">AI & Machine Learning</li>
+                    <li tabindex="0">College Study</li>
+                    <li tabindex="0">General Questions</li>
+                </ul>
+            </div>
+
+            <div class="sidebar-bottom">
+                <button class="settings-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    Settings
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="main-content">
+            <!-- Header -->
+            <header>
+                <div class="header-left">
+                    <button id="menu-btn" aria-label="Toggle Sidebar" onclick="toggleSidebar()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M3 12h18M3 6h18M3 18h18" />
+                        </svg>
+                    </button>
+                    <div class="logo">
+                        <span class="logo-icon">🤖</span>
+                        <div class="logo-text">
+                            <h1>CATBOT</h1>
+                            <span class="subtitle">AI Assistant</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn hide-mobile" onclick="clearChat()" aria-label="New Chat">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 5v14M5 12h14" />
+                        </svg>
+                    </button>
+                    <button class="icon-btn" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5" />
+                            <path
+                                d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                    </button>
+                    <button class="icon-btn profile-btn" aria-label="Profile">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Chat Area -->
+            <div id="chat-container">
+                <!-- Welcome Screen (Visible when empty) -->
+                <div id="welcome-screen">
+                    <div class="welcome-header">
+                        <span class="welcome-icon">🤖</span>
+                        <h2>Hello, I'm CATBOT</h2>
+                        <p>Your AI assistant for learning, coding,<br>research and everyday questions.</p>
+                        <p class="help-text">How can I help you today?</p>
+                    </div>
+                    <div class="suggestion-grid">
+                        <button class="suggestion-card" onclick="useSuggestion('Help me with C++')">
+                            <span class="card-icon">💻</span>
+                            <span>Help me with C++</span>
+                        </button>
+                        <button class="suggestion-card" onclick="useSuggestion('Explain AI in simple terms')">
+                            <span class="card-icon">🧠</span>
+                            <span>Explain AI</span>
+                        </button>
+                        <button class="suggestion-card" onclick="useSuggestion('Help me study for my exams')">
+                            <span class="card-icon">📚</span>
+                            <span>Help me study</span>
+                        </button>
+                        <button class="suggestion-card"
+                            onclick="useSuggestion('Search for the latest technology trends')">
+                            <span class="card-icon">🌐</span>
+                            <span>Search a topic</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages will be injected here -->
+                <div id="messages-wrapper"></div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-wrapper">
+                <div id="listening-indicator" class="hidden">🔴 Listening...</div>
+                <div class="input-container">
+                    <button class="input-btn" aria-label="Attach File">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+                        </svg>
+                    </button>
+                    <button class="input-btn" id="mic-btn" aria-label="Voice Input" onclick="toggleVoiceRecognition()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8" />
+                        </svg>
+                    </button>
+
+                    <textarea id="message-input" placeholder="Message CATBOT..." rows="1"
+                        aria-label="Message Input"></textarea>
+
+                    <button class="input-btn primary" id="send-btn" aria-label="Send Message" onclick="handleSend()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13" />
+                            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="input-footer">CATBOT can make mistakes. Consider verifying important information.</div>
+            </div>
+        </main>
+
+        <!-- Mobile Sidebar Overlay -->
+        <div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
