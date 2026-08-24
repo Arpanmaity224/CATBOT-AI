@@ -204,7 +204,7 @@ async function handleSend() {
         // =================================================
 
         const response = await fetch(
-            'http://192.168.1.10:3000/api/chat',
+            'https://catbot-ai.onrender.com/api/chat',
             {
                 method: 'POST',
 
