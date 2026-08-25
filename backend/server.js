@@ -16,15 +16,14 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "../frontend")));
 
 // =====================================================
 // TEST ROUTE
 // =====================================================
 
 app.get("/", (req, res) => {
-    res.json({
-        message: "CATBOT backend is running!"
-    });
+    res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
 // =====================================================
@@ -213,7 +212,9 @@ You are CATBOT.
 // =====================================================
 
 const PORT = process.env.PORT || 3000;
-
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/index.html"));
+});
 app.listen(PORT, "0.0.0.0", () => {
 
     console.log(
